@@ -79,10 +79,10 @@ class Code128 extends AbstractObject
             'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
             'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
             'X', 'Y', 'Z', '[', '\\', ']', '^', '_',
-            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-            0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
-            0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
-            0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
+            "\x00", "\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07",
+            "\x08", "\x09", "\x0A", "\x0B", "\x0C", "\x0D", "\x0E", "\x0F",
+            "\x10", "\x11", "\x12", "\x13", "\x14", "\x15", "\x16", "\x17",
+            "\x18", "\x19", "\x1A", "\x1B", "\x1C", "\x1D", "\x1E", "\x1F",
             'FNC3', 'FNC2', 'SHIFT', 'Code C', 'Code B', 'FNC4', 'FNC1',
             'START A', 'START B', 'START C', 'STOP'],
         'B' => [
@@ -97,7 +97,7 @@ class Code128 extends AbstractObject
             '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
             'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
             'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-            'x', 'y', 'z', '{', '|', '}', '~', 0x7F,
+            'x', 'y', 'z', '{', '|', '}', '~', "\x7F",
             'FNC3', 'FNC2', 'SHIFT', 'Code C', 'FNC4', 'Code A', 'FNC1',
             'START A', 'START B', 'START C', 'STOP',],
         'C' => [
@@ -241,10 +241,10 @@ class Code128 extends AbstractObject
                 }
                 $result[] = $code;
                 $currentCharset = 'B';
-            } elseif (array_key_exists($char, $this->charSets['A']) && $currentCharset != 'A'
-                  && ! (array_key_exists($char, $this->charSets['B']) && $currentCharset == 'B')) {
+            } elseif (in_array($char, $this->charSets['A']) && $currentCharset != 'A'
+                  && ! (in_array($char, $this->charSets['B']) && $currentCharset == 'B')) {
                 /**
-                 * Switch to C as C contains the char and C is not the current charset.
+                 * Switch to A as A contains the char and A is not the current charset.
                  */
                 if ($pos == 0) {
                     $code = array_search("START A", $this->charSets['A']);
@@ -311,3 +311,4 @@ class Code128 extends AbstractObject
         return $checksum;
     }
 }
+
